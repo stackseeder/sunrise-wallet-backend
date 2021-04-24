@@ -28,8 +28,6 @@ const job = schedule =>
         }
         usdRate = convertBtcRateToUsdRate(coinsMap['USD'].rate_btc);
 
-
-
         Object.keys(coinsMap).forEach(symbol => {
           const coin = {
             symbol,
@@ -37,8 +35,7 @@ const job = schedule =>
             rate_usd: coinsMap[symbol].rate_btc * usdRate,
             image_url: `/uploads/currencies/${symbol}.png`,
           };
-          if (Number(coin.accepted) === 1) {
-            console.log(coin)
+          if (Number(coin.accepted) === 1 && coin.status === 'online') {
             const index = currencies.findIndex(currency => currency.symbol === symbol);
             if (index >= 0) {
               uCurrencies.push(coin);
@@ -49,8 +46,13 @@ const job = schedule =>
         });
         currencies.forEach(currency => {
           const index = Object.keys(coinsMap).indexOf(currency.symbol);
-          if (index === -1 || (index >=0 && Number(coinsMap[currency.symbol].accepted) !== 1)) {
-            dCurrencies.push(currency._id);
+          if (index === -1
+            || (
+              index >=0 && (
+                Number(coinsMap[currency.symbol].accepted) !== 1 || coinsMap[currency.symbol].status !== 'online'
+              ))
+          ) {
+            dCurrencies.push(currency.symbol);
           }
         });
 
@@ -70,7 +72,7 @@ const job = schedule =>
         }
         if (dCurrencies.length) {
           await currenciesHelper.removeCurrencies({
-            _id: { $in: dCurrencies }
+            symbol: { $in: dCurrencies }
           });
           console.log(
             `[${new Date().toLocaleString()}] => Currencies - Deleted`
