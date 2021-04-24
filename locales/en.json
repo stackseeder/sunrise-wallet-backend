@@ -1,0 +1,14 @@
+{
+	"templateFooter": {
+		"TEXT1": "You received this email because you have an account on ",
+		"TEXT2": "If you have not created an account here or would like to unsubscribe please ",
+		"TEXT3": "contact Support"
+	},
+	"templateResetPassword": {
+		"SUBJECT": "Reset your password",
+		"TITLE": "Password Reset",
+		"HELLO": "Hi",
+		"MESSAGE": "Please reset your password clicking on the link below.",
+		"RESET_TEXT": "Reset password"
+	}
+}
