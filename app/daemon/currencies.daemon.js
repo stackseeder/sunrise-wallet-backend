@@ -46,7 +46,7 @@ const job = schedule =>
         });
         currencies.forEach(currency => {
           const index = Object.keys(coinsMap).indexOf(currency.symbol);
-          if (index === -1 || coinsMap[currency.symbol] !== 1) {
+          if (index === -1 || (index >=0 && coinsMap[currency.symbol] !== 1)) {
             dCurrencies.push(currency.symbol);
           }
         });
