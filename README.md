@@ -39,9 +39,3 @@ $ pm2 start npm --name api -- run start
 
 $ pm2 start npm --name daemon -- run start:daemon
 ```
-
--   Login Info
-
-```
-admin@sun.io / 12345
-```
