@@ -7,7 +7,12 @@ require('dotenv-safe').config({
   sample: path.join(__dirname, '../.env.example')
 })
 
-const whitelist = ['https://wallet.sunrise.com']
+const whitelist = [
+  'https://sunriseshackcrypto.com',
+  'https://www.sunriseshackcrypto.com',
+  'http://sunriseshackcrypto.com',
+  'http://www.sunriseshackcrypto.com',
+]
 
 if (process.env.NODE_ENV === 'development') {
   whitelist.push('http://localhost:8080')
