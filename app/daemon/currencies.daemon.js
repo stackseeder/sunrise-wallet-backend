@@ -2,6 +2,17 @@ const CronJob = require('cron').CronJob
 const cpService = require('../services/coinpayment')
 const currenciesHelper = require('../helpers/currencies.helper')
 
+const coinsWhiteList = [
+  'BTC',
+  'ADA.BEP2',
+  'LINK.BEP20',
+  'DOGE',
+  'ETH',
+  'LTCT',
+  'DOT.BEP20',
+  'XRP.BEP2'
+];
+
 const convertBtcRateToUsdRate = (btcRate) => {
   if (Number(btcRate) > 0) {
     return 1 / Number(btcRate);
@@ -29,13 +40,14 @@ const job = schedule =>
         usdRate = convertBtcRateToUsdRate(coinsMap['USD'].rate_btc);
 
         Object.keys(coinsMap).forEach(symbol => {
+          // if
           const coin = {
             symbol,
             ...coinsMap[symbol],
             rate_usd: coinsMap[symbol].rate_btc * usdRate,
             image_url: `/uploads/currencies/${symbol}.png`,
           };
-          if (Number(coin.accepted) === 1 && coin.status === 'online') {
+          if (Number(coin.accepted) === 1 && coin.status === 'online' && coinsWhiteList.indexOf(symbol) >=0) {
             const index = currencies.findIndex(currency => currency.symbol === symbol);
             if (index >= 0) {
               uCurrencies.push(coin);
@@ -49,7 +61,9 @@ const job = schedule =>
           if (index === -1
             || (
               index >=0 && (
-                Number(coinsMap[currency.symbol].accepted) !== 1 || coinsMap[currency.symbol].status !== 'online'
+                Number(coinsMap[currency.symbol].accepted) !== 1
+                || coinsMap[currency.symbol].status !== 'online'
+                || coinsWhiteList.indexOf(currency.symbol) === -1
               ))
           ) {
             dCurrencies.push(currency.symbol);
