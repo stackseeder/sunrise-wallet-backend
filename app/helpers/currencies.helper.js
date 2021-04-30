@@ -9,7 +9,7 @@ const getAllCurrencies = async () => {
   return new Promise((resolve, reject) => {
     model.find({}, {}, {
       sort: {
-        symbol: 1
+        name: 1
       }
     }, (err, items) => {
       if (err) {
