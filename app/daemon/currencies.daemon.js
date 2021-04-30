@@ -47,7 +47,7 @@ const job = schedule =>
             rate_usd: coinsMap[symbol].rate_btc * usdRate,
             image_url: `/uploads/currencies/${symbol}.png`,
           };
-          if (Number(coin.accepted) === 1 && coin.status === 'online' && coinsWhiteList.indexOf(symbol) >=0) {
+          if (Number(coin.accepted) === 1 && coin.status === 'online' && coinsWhiteList.indexOf(symbol) >= 0) {
             const index = currencies.findIndex(currency => currency.symbol === symbol);
             if (index >= 0) {
               uCurrencies.push(coin);
