@@ -7,7 +7,11 @@ const utils = require('../services/utils')
 
 const getAllCurrencies = async () => {
   return new Promise((resolve, reject) => {
-    model.find({}, (err, items) => {
+    model.find({}, {}, {
+      sort: {
+        symbol: 1
+      }
+    }, (err, items) => {
       if (err) {
         reject(utils.buildErrObject(422, err.message))
       }
